@@ -22,7 +22,7 @@ pipeline {
             
             steps {
                 echo "${env.BRANCH_NAME}"
-                
+                def aliaceName = ${env.BRANCH_NAME}
                 bat 'docker run --name spring{env.BRANCH_NAME} -d -p 8080 springdocker:1.0'
             }
         }
