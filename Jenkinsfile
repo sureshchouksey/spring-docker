@@ -6,8 +6,8 @@ pipeline {
 
             steps {
                 withMaven(maven : 'apache-maven-3.6.1') {
-                    bat 'mvn package'
-                    bat 'java -jar target/websocket-demo-0.0.1-SNAPSHOT.jar'
+                    bat 'mvn clean install -Dmaven.test.skip=true'
+                    
                 }
             }
         }
