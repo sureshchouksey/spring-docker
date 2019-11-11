@@ -14,7 +14,14 @@ pipeline {
         stage ('Docker') {
 
             steps {
-                bat 'docker build -t springdocker .'
+                bat 'docker build -t springdocker:1.0 .'
+            }
+        }
+
+        stage ('Run Docker') {
+
+            steps {
+                bat 'docker run --name spring -d -p 8080 springdocker:1.0'
             }
         }
 
