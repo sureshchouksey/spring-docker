@@ -22,10 +22,11 @@ pipeline {
             
             steps {
                 echo "${env.BRANCH_NAME}"
+                echo "${currentBuild.number}"
                 bat ("docker stop spring${env.BRANCH_NAME}")
                 bat ("docker rm spring${env.BRANCH_NAME}")
                 bat ("docker run --name spring${env.BRANCH_NAME} -d -p 8080 springdocker:1.0")
-                echo "docker ps | grep spring${env.BRANCH_NAME} | sed 's/.*0.0.0.0://g' | sed 's/->.*//g'"
+                //echo "docker ps | grep spring${env.BRANCH_NAME} | sed 's/.*0.0.0.0://g' | sed 's/->.*//g'"
             }
         }
 
