@@ -5,28 +5,13 @@ pipeline {
         stage ('Clone') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    bat 'mvn clean compile'
+                withMaven(maven : 'apache-maven-3.6.1') {
+                    bat 'mvn package'
+                    bat 'java -jar target/websocket-demo-0.0.1-SNAPSHOT.jar'
                 }
             }
         }
 
-        stage ('Testing Stage') {
-
-            steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    bat 'mvn test'
-                }
-            }
-        }
-
-
-        stage ('Deployment Stage') {
-            steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    bat 'mvn deploy'
-                }
-            }
-        }
+       
     }
 }
