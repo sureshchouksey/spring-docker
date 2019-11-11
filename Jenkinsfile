@@ -14,7 +14,7 @@ pipeline {
         stage ('Docker') {
 
             steps {
-                bat 'docker build -t springDocker .'
+                bat 'docker build -t springdocker .'
             }
         }
 
