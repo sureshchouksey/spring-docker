@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo "${env.BRANCH_NAME}"
                 def branchName="${env.BRANCH_NAME}"
-                bat 'docker run --name spring-${branchName} spring -d -p 8080 springdocker:1.0'
+                bat 'docker run --name spring-${branchName} -d -p 8080 springdocker:1.0'
             }
         }
 
