@@ -5,28 +5,28 @@ pipeline {
         stage ('Clone') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    bat 'mvn clean compile'
+                withMaven(maven : 'apache-maven-3.6.1') {
+                    bat 'mvn clean install -Dmaven.test.skip=true'
+                    
                 }
             }
         }
-
-        stage ('Testing Stage') {
+        stage ('Docker') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    bat 'mvn test'
-                }
+                bat 'docker build -t springdocker:1.0 .'
             }
         }
 
-
-        stage ('Deployment Stage') {
+        stage ('Run Docker') {
+            
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    bat 'mvn deploy'
-                }
+                echo "${env.BRANCH_NAME}"
+                def aliaceName = ${env.BRANCH_NAME}
+                bat 'docker run --name spring{env.BRANCH_NAME} -d -p 8080 springdocker:1.0'
             }
         }
+
+       
     }
 }
