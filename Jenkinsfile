@@ -19,7 +19,7 @@ pipeline {
         }
 
         stage ('Run Docker') {
-
+            echo ${env.BRANCH_NAME}
             steps {
                 bat 'docker run --name spring -d -p 8080 springdocker:1.0'
             }
