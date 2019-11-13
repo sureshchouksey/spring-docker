@@ -5,10 +5,10 @@ pipeline {
         stage ('Clone') {
 
             steps {
-                withMaven(maven : 'maven') {
+                
                     sh 'mvn clean install -Dmaven.test.skip=true'
                     
-                }
+                
             }
         }
         stage ('Build Docker') {
