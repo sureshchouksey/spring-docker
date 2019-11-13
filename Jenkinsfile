@@ -13,7 +13,7 @@ pipeline {
         }
         stage ('Build Docker') {
             steps {
-                sh 'docker pull ashishfulcrum/weblogic_server:11g'
+                sh 'docker pull ramana152/weblogic:11g'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
                 echo "${currentBuild.number}"
                 //bat ("docker stop spring${env.BRANCH_NAME}${currentBuild.number}")
                 //bat ("docker rm spring${env.BRANCH_NAME}${currentBuild.number}")
-                sh ("docker run --name weblogic${env.BRANCH_NAME}${currentBuild.number} -d -p 7001 ashishfulcrum/weblogic_server:11g")
+                sh ("docker run --name weblogic${env.BRANCH_NAME}${currentBuild.number} -d -p 7001 ramana152/weblogic:11g")
             }
         }
 
