@@ -6,15 +6,14 @@ pipeline {
 
             steps {
                 withMaven(maven : 'apache-maven-3.6.1') {
-                    bat 'mvn clean install -Dmaven.test.skip=true'
+                    sh 'mvn clean install -Dmaven.test.skip=true'
                     
                 }
             }
         }
-        stage ('Docker') {
-
+        stage ('Build Docker') {
             steps {
-                bat 'docker build -t springdocker:1.0 .'
+                sh 'docker pull ashishfulcrum/weblogic_server:11g'
             }
         }
 
@@ -25,10 +24,19 @@ pipeline {
                 echo "${currentBuild.number}"
                 //bat ("docker stop spring${env.BRANCH_NAME}${currentBuild.number}")
                 //bat ("docker rm spring${env.BRANCH_NAME}${currentBuild.number}")
-                bat ("docker run --name spring${env.BRANCH_NAME}${currentBuild.number} -d -p 8080 springdocker:1.0")
-                //echo "docker ps | grep spring${env.BRANCH_NAME} | sed 's/.*0.0.0.0://g' | sed 's/->.*//g'"
+                sh ("docker run --name weblogic${env.BRANCH_NAME}${currentBuild.number} -d -p 7001 ashishfulcrum/weblogic_server:11g")
             }
         }
+
+         stage('Set Weblogic Port') {
+            steps {
+                script {
+                    weblogicPortNumber = sh(returnStdout: true, script: "docker ps|grep weblogic${env.BRANCH_NAME}${currentBuild.number}|sed 's/.*0.0.0.0://g'|sed 's/->.*//g'")
+                    echo 'Weblogic port number: ' + weblogicPortNumber
+                }
+            }
+        }
+
 
        
     }
