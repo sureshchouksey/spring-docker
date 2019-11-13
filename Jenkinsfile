@@ -5,7 +5,7 @@ pipeline {
         stage ('Clone') {
 
             steps {
-                withMaven(maven : 'apache-maven-3.6.1') {
+                withMaven(maven : 'maven') {
                     sh 'mvn clean install -Dmaven.test.skip=true'
                     
                 }
